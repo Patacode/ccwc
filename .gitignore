@@ -1,7 +1,7 @@
 .vscode
 ccwc
 ccwc.test
-out/
+coverage/
 *.gcda
 *.gcno
 coverage.info
