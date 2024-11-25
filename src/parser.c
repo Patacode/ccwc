@@ -8,10 +8,10 @@
 bool count_flag_setter(Arguments* args, int key) {
   int flag_idx = -1;
   switch(key) {
-    case LINE_FLAG: flag_idx = LINE_FLAG_INDEX; break;
-    case WORD_FLAG: flag_idx = WORD_FLAG_INDEX; break;
-    case CHAR_FLAG: flag_idx = CHAR_FLAG_INDEX; break;
-    case BYTE_FLAG: flag_idx = BYTE_FLAG_INDEX; break;
+    case LINE_FLAG: args -> flag_mask |= LINE_FLAG_MASK; flag_idx = LINE_FLAG_INDEX; break;
+    case WORD_FLAG: args -> flag_mask |= WORD_FLAG_MASK; flag_idx = WORD_FLAG_INDEX; break;
+    case CHAR_FLAG: args -> flag_mask |= CHAR_FLAG_MASK; flag_idx = CHAR_FLAG_INDEX; break;
+    case BYTE_FLAG: args -> flag_mask |= BYTE_FLAG_MASK; flag_idx = BYTE_FLAG_INDEX; break;
   }
 
   bool is_valid_key = flag_idx != -1;
@@ -58,12 +58,18 @@ void parse_args(const struct argp* argp, int argc, char** argv, Arguments* args)
 
 int process_args(const Arguments* args) {
   char* file_content;
+  bool check_file_content = true;
   if(args -> is_from_stdin) {
     file_content = get_stdin_content();
   } else {
-    file_content = get_file_content(args -> filename);
+    uint8_t combined_mask = CHAR_FLAG_MASK | BYTE_FLAG_MASK;
+    if(args -> flag_mask == BYTE_FLAG_MASK || ((args -> flag_mask & combined_mask) && (args -> flag_mask & ~combined_mask) == 0) && MB_CUR_MAX == 1) {
+      check_file_content = false;
+    } else {
+      file_content = get_file_content(args -> filename);
+    }
   }
-  if(file_content == NULL) {
+  if(check_file_content && file_content == NULL) {
     return 1;
   }
 

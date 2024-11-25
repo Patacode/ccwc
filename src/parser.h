@@ -2,8 +2,10 @@
 #define PARSER_H
 
 #include <argp.h>
+#include <stdint.h>
 
 typedef struct {
+  uint8_t flag_mask;
   bool is_from_stdin;
   size_t flag_counter;
   char count_flags[4];

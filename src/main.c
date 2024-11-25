@@ -30,6 +30,7 @@ int main(int argc, char **argv) {
   setlocale(LC_CTYPE, "");
 
   Arguments args = {
+    .flag_mask = 0,
     .filename = NULL,
     .is_from_stdin = false,
     .flag_counter = 0,

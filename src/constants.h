@@ -12,5 +12,9 @@
 #define WORD_FLAG 'w'
 #define CHAR_FLAG 'm'
 #define BYTE_FLAG 'c'
+#define LINE_FLAG_MASK 0x01  // 0001
+#define WORD_FLAG_MASK 0x02  // 0010
+#define CHAR_FLAG_MASK 0x04  // 0100
+#define BYTE_FLAG_MASK 0x08  // 1000
 
 #endif // CONSTANTS_H
