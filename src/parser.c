@@ -82,7 +82,17 @@ int process_args(const Arguments* args) {
           count_value = count_words(file_content);
           break;
         case CHAR_FLAG:
-          count_value = count_chars(file_content);
+          if(MB_CUR_MAX == 1) {
+            if(args -> is_from_stdin) {
+              count_value = count_bytes(file_content);
+            } else {
+              ssize_t tmp_byte_count = count_bytes_in_file(args -> filename);
+              if(tmp_byte_count == -1) return 1;
+              count_value = (size_t) tmp_byte_count;
+            }
+          } else {
+            count_value = count_chars(file_content);
+          }
           break;
         case BYTE_FLAG:
           if(args -> is_from_stdin) {
