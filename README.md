@@ -13,6 +13,19 @@ make test # run unit tests
 make report # generate unit tests coverage report
 ```
 
+You can benchmark the script by using the `benchmark` target:
+
+```bash
+make benchmark
+```
+
+It relies on hyperfine and python scripts. As a pre-requisites, you will need below
+python dependencies installed:
+
+```
+pip install numpy matplotlib scipy
+```
+
 ## Usage
 
 Available options:
