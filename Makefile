@@ -44,11 +44,13 @@ report: test
 	firefox out/index.html
 
 benchmark: build
-	hyperfine --runs 1000 --warmup 3 './ccwc data/test.txt' 'wc data/test.txt' --export-json benchmark.json
+	hyperfine --runs 1000 --warmup 3 './ccwc $(ARGS) data/test.txt' 'wc $(ARGS) data/test.txt' --export-json benchmark.json
 	./scripts/plot_progression.py benchmark.json --output plot_progression.png
 	./scripts/plot_histogram.py benchmark.json --output plot_histogram.png
 	./scripts/plot_whisker.py benchmark.json --output plot_whisker.png
-	firefox plot_progression.png plot_histogram.png plot_whisker.png
+	firefox plot_progression.png
+	firefox plot_histogram.png
+	firefox plot_whisker.png
 
 clean:
 	rm -f *.gcda *.gcno
