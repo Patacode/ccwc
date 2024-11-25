@@ -43,8 +43,17 @@ report: test
 	genhtml coverage.info --output-directory out --exclude $(UNITY_DIR)
 	firefox out/index.html
 
+benchmark: build
+	hyperfine --runs 1000 --warmup 3 './ccwc data/test.txt' --export-json benchmark.json
+	./scripts/plot_progression.py benchmark.json --output plot_progression.png
+	./scripts/plot_histogram.py benchmark.json --output plot_histogram.png
+	./scripts/plot_whisker.py benchmark.json --output plot_whisker.png
+	firefox plot_progression.png plot_histogram.png plot_whisker.png
+
 clean:
 	rm -f *.gcda *.gcno
 	rm -f $(TARGET_TEST) $(TARGET_SRC)
 	rm -f coverage.info
 	rm -rf out/
+	rm benchmark.json
+	rm *.png

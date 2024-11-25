@@ -5,3 +5,6 @@ out/
 *.gcda
 *.gcno
 coverage.info
+benchmark.json
+*.png
+hyperfine/
