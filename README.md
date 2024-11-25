@@ -13,7 +13,8 @@ make test # run unit tests
 make report # generate unit tests coverage report
 ```
 
-You can benchmark the script by using the `benchmark` target:
+You can benchmark the script by using the `benchmark` target, which will compare the runtimes
+of native wc and this utility:
 
 ```bash
 make benchmark
